@@ -1,0 +1,10 @@
+package com.FreeCodeUserJack.recipeProject.Services;
+
+import com.FreeCodeUserJack.recipeProject.domain.Recipe;
+
+import java.util.Set;
+
+public interface RecipeService {
+
+    Set<Recipe> getRecipes();
+}

@@ -1,14 +1,23 @@
 package com.FreeCodeUserJack.recipeProject.controllers;
 
+import com.FreeCodeUserJack.recipeProject.Services.RecipeService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class IndexController {
 
+    private final RecipeService recipeService;
+
+    public IndexController(RecipeService recipeService) {
+        this.recipeService = recipeService;
+    }
+
     @RequestMapping({"", "/", "/index"})
-    public String getIndexPage() {
-        System.out.println("test 1111112222");
+    public String getIndexPage(Model model) {
+        model.addAttribute("recipes", recipeService.getRecipes());
+
         return "index";
     }
 }

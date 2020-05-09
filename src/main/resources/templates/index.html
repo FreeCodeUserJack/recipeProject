@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
     <h1 th:text="'This is Thymeleaf Index Page!!!!'">This is Index Page</h1>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Description</th>
+        </tr>
+        <tr th:each="recipe: ${recipes}">
+            <td th:text="${recipe.getId()}">123</td>
+            <td th:text="${recipe.getDescription()}">Desc</td>
+        </tr>
+    </table>
 </body>
 </html>
