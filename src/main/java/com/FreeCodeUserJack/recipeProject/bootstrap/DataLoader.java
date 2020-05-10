@@ -4,6 +4,7 @@ import com.FreeCodeUserJack.recipeProject.domain.*;
 import com.FreeCodeUserJack.recipeProject.repositories.CategoryRepository;
 import com.FreeCodeUserJack.recipeProject.repositories.RecipeRepository;
 import com.FreeCodeUserJack.recipeProject.repositories.UnitMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private final RecipeRepository recipeRepository;
@@ -28,6 +30,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         recipeRepository.saveAll(getRecipes());
+        log.debug("I'm in DataLoader Bootstrap!");
     }
 
     private List<Recipe> getRecipes() {
