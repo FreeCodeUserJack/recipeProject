@@ -14,9 +14,9 @@
 	<name>recipeProject</name>
 	<description>SFG Recipe Project</description>
 
-	<properties>
-		<java.version>13</java.version>
-	</properties>
+<!--	<properties>-->
+<!--		<java.version>13</java.version>-->
+<!--	</properties>-->
 
 	<dependencies>
 		<dependency>
