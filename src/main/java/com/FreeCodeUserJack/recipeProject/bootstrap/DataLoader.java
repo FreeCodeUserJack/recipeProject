@@ -105,6 +105,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         guacRecipe.setPrepTime(10);
         guacRecipe.setCookTime(0);
         guacRecipe.setDifficulty(Difficulty.EASY);
+        guacRecipe.setServings(5);
+        guacRecipe.setSource("Home Cooking 101");
+        guacRecipe.setUrl("https://guacamole.com");
         guacRecipe.setDirections("1 Cut avocado, remove flesh: Cut the avocados in half. Remove seed. Score the inside of the avocado with a blunt knife and scoop out the flesh with a spoon" +
                 "\n" +
                 "2 Mash with a fork: Using a fork, roughly mash the avocado. (Don't overdo it! The guacamole should be a little chunky.)" +
@@ -149,6 +152,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         tacosRecipe.setDescription("Spicy Grilled Chicken Taco");
         tacosRecipe.setCookTime(9);
         tacosRecipe.setPrepTime(20);
+        tacosRecipe.setServings(4);
+        tacosRecipe.setSource("American Digest");
+        tacosRecipe.setUrl("https://tacos.com");
         tacosRecipe.setDifficulty(Difficulty.MODERATE);
 
         tacosRecipe.setDirections("1 Prepare a gas or charcoal grill for medium-high, direct heat.\n" +
