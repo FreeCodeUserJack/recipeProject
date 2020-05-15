@@ -1,5 +1,7 @@
 package com.FreeCodeUserJack.recipeProject.Services;
 
+import com.FreeCodeUserJack.recipeProject.converters.RecipeCommandToRecipe;
+import com.FreeCodeUserJack.recipeProject.converters.RecipeToRecipeCommand;
 import com.FreeCodeUserJack.recipeProject.domain.Recipe;
 import com.FreeCodeUserJack.recipeProject.repositories.RecipeRepository;
 import org.junit.Before;
@@ -23,10 +25,16 @@ public class RecipeServiceImplTest {
     @Mock
     RecipeRepository recipeRepository;
 
+    @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
+
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
+
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this); // initializes objects annotated with Mockito annotations for given testClass
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
 
     @Test
