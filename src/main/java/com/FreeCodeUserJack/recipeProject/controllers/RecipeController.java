@@ -1,9 +1,12 @@
 package com.FreeCodeUserJack.recipeProject.controllers;
 
 import com.FreeCodeUserJack.recipeProject.Services.RecipeService;
+import com.FreeCodeUserJack.recipeProject.commands.RecipeCommand;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -21,4 +24,20 @@ public class RecipeController {
 
         return "recipe/show";
     }
+
+    @RequestMapping("recipe/new")
+    public String newRecipe(Model model) {
+        model.addAttribute("recipe", new RecipeCommand());
+
+        return "recipe/recipeForm";
+    }
+
+    @PostMapping
+    @RequestMapping("recipe") // don't need -> method = RequestMethod.POST, use Post annotatio, name attr is buggy (?)
+    public String saveOrUpdate(@ModelAttribute RecipeCommand recipeCommand) {
+        RecipeCommand savedCommand = recipeService.saveRecipeCommand(recipeCommand);
+
+        return "redirect:/recipe/show/" + savedCommand.getId();
+    }
+
 }
