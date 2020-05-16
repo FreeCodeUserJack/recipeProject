@@ -17,7 +17,7 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
-    @RequestMapping("/recipe/show/{id}")
+    @RequestMapping("/recipe/{id}/show")
     public String showById(@PathVariable String id, Model model) {
         // valueOf() returns Long obj while parseLong() returns long primitive
         model.addAttribute("recipe", recipeService.findById(Long.valueOf(id)));
@@ -32,12 +32,19 @@ public class RecipeController {
         return "recipe/recipeForm";
     }
 
+    @RequestMapping("recipe/{id}/update")
+    public String updateRecipe(@PathVariable String id, Model model) {
+        model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
+
+        return "recipe/recipeForm";
+    }
+
     @PostMapping
     @RequestMapping("recipe") // don't need -> method = RequestMethod.POST, use Post annotatio, name attr is buggy (?)
     public String saveOrUpdate(@ModelAttribute RecipeCommand recipeCommand) {
         RecipeCommand savedCommand = recipeService.saveRecipeCommand(recipeCommand);
 
-        return "redirect:/recipe/show/" + savedCommand.getId();
+        return "redirect:/recipe/" + savedCommand.getId() + "/show";
     }
 
 }

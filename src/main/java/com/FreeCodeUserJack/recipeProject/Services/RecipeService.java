@@ -10,4 +10,5 @@ public interface RecipeService {
     Set<Recipe> getRecipes();
     Recipe findById(Long id);
     RecipeCommand saveRecipeCommand(RecipeCommand command); // take recipe from web controller to save to DB
+    RecipeCommand findCommandById(Long id);
 }
