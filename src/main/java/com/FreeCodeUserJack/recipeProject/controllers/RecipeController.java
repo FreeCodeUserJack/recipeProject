@@ -2,6 +2,7 @@ package com.FreeCodeUserJack.recipeProject.controllers;
 
 import com.FreeCodeUserJack.recipeProject.Services.RecipeService;
 import com.FreeCodeUserJack.recipeProject.commands.RecipeCommand;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Slf4j
 @Controller
 public class RecipeController {
     private final RecipeService recipeService;
@@ -47,4 +49,12 @@ public class RecipeController {
         return "redirect:/recipe/" + savedCommand.getId() + "/show";
     }
 
+    @RequestMapping("recipe/{id}/delete")
+    public String deleteRecipe(@PathVariable String id, Model model) {
+        log.debug("deleting recipe with id: " + id);
+
+        recipeService.deleteCommandById(Long.valueOf(id));
+
+        return "redirect:/";
+    }
 }

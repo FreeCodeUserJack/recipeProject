@@ -60,4 +60,9 @@ public class RecipeServiceImpl implements RecipeService {
         return recipeToRecipeCommand.convert(findById(id)); // already has find by id for normal database operation
     }
 
+    @Override // don't need transactional b/c using recipeRepository (?)
+    public void deleteCommandById(Long id) {
+        recipeRepository.deleteById(id);
+    }
+
 }

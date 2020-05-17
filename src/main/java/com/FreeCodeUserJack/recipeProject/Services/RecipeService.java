@@ -11,4 +11,5 @@ public interface RecipeService {
     Recipe findById(Long id);
     RecipeCommand saveRecipeCommand(RecipeCommand command); // take recipe from web controller to save to DB
     RecipeCommand findCommandById(Long id);
+    void deleteCommandById(Long id);
 }
