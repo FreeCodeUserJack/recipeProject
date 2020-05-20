@@ -104,4 +104,33 @@ public class IngredientServiceImpl implements IngredientService {
         // todo check for fail
         return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
     }
+
+    @Override
+    @org.springframework.transaction.annotation.Transactional
+    public void deleteByRecipeIdAndIngredientId(Long recipeId, Long ingredientId) {
+        Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
+
+        if (!recipeOptional.isPresent()) {
+            // todo handle error
+            log.error("recipe with id " + recipeId + " not found");
+            return;
+        }
+
+        Recipe recipe = recipeOptional.get();
+
+        Optional<Ingredient> ingredientOptional = recipe.getIngredients().stream()
+                .filter(ing -> ing.getId().equals(ingredientId))
+                .findFirst();
+
+        if (ingredientOptional.isPresent()) {
+            log.debug("found ingredient to delete");
+            Ingredient ingredient = ingredientOptional.get();
+            ingredient.setRecipe(null);
+            recipe.getIngredients().remove(ingredientOptional.get()); // can i just use ingredient name here?
+            recipeRepository.save(recipe); // save / update with the recipe repository
+        }
+        else {
+            log.debug("ingredient does not exist");
+        }
+    }
 }
