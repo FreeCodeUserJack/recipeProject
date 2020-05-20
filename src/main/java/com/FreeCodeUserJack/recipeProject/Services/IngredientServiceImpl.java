@@ -60,7 +60,7 @@ public class IngredientServiceImpl implements IngredientService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(command.getRecipeId());
 
         if (!recipeOptional.isPresent()) {
-            // todo toss error if not found
+            // todo toss error if not found -> right now is happy path, if not found, need to address
             log.error("Ingredient with id not found: " + command.getId());
             return new IngredientCommand();
         }
@@ -80,14 +80,28 @@ public class IngredientServiceImpl implements IngredientService {
         }
         else {
             // add new Ingredient
-            recipe.addIngredient(ingredientCommandToIngredient.convert(command));
+            Ingredient ingredient = ingredientCommandToIngredient.convert(command);
+            // need to set recipe Object b/c we were using recipe Id in commands but obj in DB
+            ingredient.setRecipe(recipe);
+            recipe.addIngredient(ingredient);
         }
 
         Recipe savedRecipe = recipeRepository.save(recipe);
 
+        Optional<Ingredient> savedIngredientOptional = savedRecipe.getIngredients()
+                .stream().filter(ing -> ing.getId().equals(command.getId())).findFirst();
+
+        // check by description, if no ingredient found, try to find again
+        if(!savedIngredientOptional.isPresent()) { // what if new ingredient, not in DB? then no id
+            // not totally save but best guess
+            savedIngredientOptional = savedRecipe.getIngredients().stream()
+                    .filter(ing -> ing.getAmount().equals(command.getAmount()))
+                    .filter(ing -> ing.getDescription().equals(command.getDescription()))
+                    .filter(ing -> ing.getUnit().getId().equals(command.getUnitOfMeasure().getId()))
+                    .findFirst();
+        }
+
         // todo check for fail
-        return ingredientToIngredientCommand.convert(savedRecipe.getIngredients()
-                .stream().filter(ing -> ing.getId().equals(command.getId()))
-                .findFirst().get());
+        return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
     }
 }

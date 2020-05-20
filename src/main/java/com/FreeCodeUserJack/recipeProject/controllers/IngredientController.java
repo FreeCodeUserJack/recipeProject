@@ -4,6 +4,8 @@ import com.FreeCodeUserJack.recipeProject.Services.IngredientService;
 import com.FreeCodeUserJack.recipeProject.Services.RecipeService;
 import com.FreeCodeUserJack.recipeProject.Services.UnitMeasureService;
 import com.FreeCodeUserJack.recipeProject.commands.IngredientCommand;
+import com.FreeCodeUserJack.recipeProject.commands.RecipeCommand;
+import com.FreeCodeUserJack.recipeProject.commands.UnitMeasureCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +41,24 @@ public class IngredientController {
                 .findByRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(ingredientId)));
 
         return "recipe/ingredient/show";
+    }
+
+    @GetMapping
+    @RequestMapping("recipe/{recipeId}/ingredient/new")
+    public String newIngredient(@PathVariable String recipeId, Model model) {
+        // make sure recipe is found todo implement not found handling
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+
+        // create new ing and set recipe id for hidden form field
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        model.addAttribute("ingredient", ingredientCommand);
+
+        // get UOM
+        ingredientCommand.setUnitOfMeasure(new UnitMeasureCommand());
+        model.addAttribute("uomList", unitMeasureService.listAllUnitMeasures());
+
+        return "recipe/ingredient/ingredientForm";
     }
 
     @GetMapping

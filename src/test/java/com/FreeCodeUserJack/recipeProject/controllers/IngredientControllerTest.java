@@ -77,6 +77,25 @@ public class IngredientControllerTest {
     }
 
     @Test
+    public void testNewIngredientForm() throws Exception {
+        // given
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        // when
+        when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
+
+        // then
+        mockMvc.perform(get("/recipe/1/ingredient/new"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("recipe/ingredient/ingredientForm"))
+            .andExpect(model().attributeExists("ingredient"))
+            .andExpect(model().attributeExists("uomList"));
+
+        verify(recipeService, times(1)).findCommandById(anyLong());
+    }
+
+    @Test
     public void testUpdateIngredientForm() throws Exception {
         // given
         IngredientCommand com = new IngredientCommand();
