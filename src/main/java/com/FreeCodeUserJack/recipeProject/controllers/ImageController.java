@@ -46,10 +46,11 @@ public class ImageController {
     public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws IOException {
         RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(id));
 
-        if(recipeCommand.getImage() != null) {
+        if(recipeCommand.getImage() != null) { // need to set up start image or default image
             byte[] byteArray = new byte[recipeCommand.getImage().length];
             int i = 0;
 
+            // why do we need to copy over byte by byte
             for (Byte b: recipeCommand.getImage()) {
                 byteArray[i++] = b; // auto unboxing
             }
