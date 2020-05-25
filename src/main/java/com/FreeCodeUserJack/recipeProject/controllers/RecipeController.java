@@ -72,4 +72,18 @@ public class RecipeController {
 
         return modelAndView;
     }
+
+    // for when someone enters string for ownerId (e.g. recipe/asdf/show)
+    @ResponseStatus(HttpStatus.BAD_REQUEST) // when NumberFormatException is encountered, return HTTP status of 400
+    @ExceptionHandler(NumberFormatException.class)
+    public ModelAndView handleBadRequest(Exception e ) {
+        log.error(e.getMessage());
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("400error");
+
+        modelAndView.addObject("exception", e);
+
+        return modelAndView;
+    }
 }
