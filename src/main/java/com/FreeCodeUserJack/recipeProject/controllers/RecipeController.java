@@ -60,27 +60,13 @@ public class RecipeController {
     // will respond with 404 but also redirect to 404error.html
     @ResponseStatus(HttpStatus.NOT_FOUND)
     // to handle if the specified exception is thrown
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler(NotFoundException.class) // this is saying for NotFoundException, response will be 404
     public ModelAndView handleNotFound(Exception e) {
         log.error("Handling Not Found Exception");
         log.error(e.getMessage());
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("404error");
-
-        modelAndView.addObject("exception", e);
-
-        return modelAndView;
-    }
-
-    // for when someone enters string for ownerId (e.g. recipe/asdf/show)
-    @ResponseStatus(HttpStatus.BAD_REQUEST) // when NumberFormatException is encountered, return HTTP status of 400
-    @ExceptionHandler(NumberFormatException.class)
-    public ModelAndView handleBadRequest(Exception e ) {
-        log.error(e.getMessage());
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("400error");
 
         modelAndView.addObject("exception", e);
 
