@@ -2,13 +2,13 @@ package com.FreeCodeUserJack.recipeProject.controllers;
 
 import com.FreeCodeUserJack.recipeProject.Services.RecipeService;
 import com.FreeCodeUserJack.recipeProject.commands.RecipeCommand;
+import com.FreeCodeUserJack.recipeProject.exceptions.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
 @Controller
@@ -55,5 +55,17 @@ public class RecipeController {
         recipeService.deleteCommandById(Long.valueOf(id));
 
         return "redirect:/";
+    }
+
+    // will respond with 404 but also redirect to 404error.html
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    // to handle if the specified exception is thrown
+    @ExceptionHandler(NotFoundException.class)
+    public ModelAndView handleNotFound() {
+        log.error("Handling Not Found Exception");
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("404error");
+        return modelAndView;
     }
 }

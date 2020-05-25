@@ -58,7 +58,10 @@ public class RecipeControllerTest {
         when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
 
         mockMvc.perform(get("/recipe/1/show"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                // ExceptionHandler takes precedence over @ResponseStatus on NotFoundException
+                // BUT if @ResponseStatus placed above ExceptionHandler in the RecipeController, ResponseStatus wins
+                .andExpect(view().name("404error"));
     }
 
     @Test
