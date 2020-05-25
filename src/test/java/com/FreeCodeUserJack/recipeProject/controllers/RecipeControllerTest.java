@@ -3,6 +3,7 @@ package com.FreeCodeUserJack.recipeProject.controllers;
 import com.FreeCodeUserJack.recipeProject.Services.RecipeService;
 import com.FreeCodeUserJack.recipeProject.commands.RecipeCommand;
 import com.FreeCodeUserJack.recipeProject.domain.Recipe;
+import com.FreeCodeUserJack.recipeProject.exceptions.NotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -45,6 +46,19 @@ public class RecipeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/show"))
                 .andExpect(model().attributeExists("recipe"));
+    }
+
+    @Test
+    public void testGetRecipeNotFound() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+
+//        b/c NotFoundException has @ResponseStatus(NOT_FOUND) - 404, when exception is thrown, 404 is shown
+            // normally 500 is thrown but we changed it to 404
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound());
     }
 
     @Test

@@ -68,8 +68,6 @@ public class IngredientController {
         model.addAttribute("ingredient", ing);
         model.addAttribute("uomList", unitMeasureService.listAllUnitMeasures());
 
-        System.out.println(ing.getUnitOfMeasure().getDescription()); // ing is correctly setup
-
         return "recipe/ingredient/ingredientForm";
     }
 
