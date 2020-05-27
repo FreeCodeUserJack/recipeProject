@@ -7,12 +7,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @Slf4j
 @Controller
 public class RecipeController {
+    private static final String RECIPE_RECIPEFORM_URL = "recipe/recipeForm";
+
     private final RecipeService recipeService;
 
     public RecipeController(RecipeService recipeService) {
@@ -31,18 +36,29 @@ public class RecipeController {
     public String newRecipe(Model model) {
         model.addAttribute("recipe", new RecipeCommand());
 
-        return "recipe/recipeForm";
+        return RECIPE_RECIPEFORM_URL;
     }
 
     @GetMapping("recipe/{id}/update")
     public String updateRecipe(@PathVariable String id, Model model) {
         model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
 
-        return "recipe/recipeForm";
+        return RECIPE_RECIPEFORM_URL;
     }
 
-    @PostMapping("recipe") // don't need -> method = RequestMethod.POST, use Post annotatio, name attr is buggy (?)
-    public String saveOrUpdate(@ModelAttribute RecipeCommand recipeCommand) {
+    @PostMapping("recipe") // don't need -> method = RequestMethod.POST, use Post annotation, name attr is buggy (?)
+    public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeCommand recipeCommand, BindingResult result) {
+//        @Valid will apply validation constraints on the recipeCommand obj or else won't apply validations
+        if (result.hasErrors()) {
+            result.getAllErrors().forEach(error -> {
+                log.debug(error.toString());
+            });
+
+            // BindingResult allows us to access #fields property in thymeleaf
+
+            return RECIPE_RECIPEFORM_URL;
+        }
+
         RecipeCommand savedCommand = recipeService.saveRecipeCommand(recipeCommand);
 
         return "redirect:/recipe/" + savedCommand.getId() + "/show";
