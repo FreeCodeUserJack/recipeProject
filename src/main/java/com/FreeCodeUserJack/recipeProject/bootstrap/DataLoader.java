@@ -6,6 +6,7 @@ import com.FreeCodeUserJack.recipeProject.repositories.RecipeRepository;
 import com.FreeCodeUserJack.recipeProject.repositories.UnitMeasureRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 @Slf4j
 @Component
+@Profile("default")
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private final RecipeRepository recipeRepository;
     private final CategoryRepository categoryRepository;
@@ -32,7 +34,8 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
     @Transactional // prevent lazy initialization exception (make all occur in same transaction, timing issue in threads)
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         recipeRepository.saveAll(getRecipes());
-        log.debug("I'm in DataLoader Bootstrap!");
+        log.debug("I'm in DataLoader Bootstrap!"); // this is not showing up, maybe logging level?
+        System.out.println("H2 loading!");
     }
 
     private List<Recipe> getRecipes() {

@@ -24,7 +24,7 @@ public class UnitMeasureRepositoryIT {
     public void setUp() throws Exception {
     }
 
-    // this test DOES run against the underlying database, I think the data.sql is also being run
+    // this test DOES run against the underlying database, I think the data-h2.sql is also being run
 
     @Test
     public void findByDescription() {
