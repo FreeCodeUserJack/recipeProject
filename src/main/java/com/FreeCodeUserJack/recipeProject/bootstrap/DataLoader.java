@@ -78,7 +78,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         //get optionals
         UnitMeasure eachUom = eachUomOptional.get();
         UnitMeasure tableSpoonUom = tableSpoonUomOptional.get();
-        UnitMeasure teapoonUom = tableSpoonUomOptional.get();
+        UnitMeasure teaspoonUom = tableSpoonUomOptional.get();
         UnitMeasure dashUom = dashUomOptional.get();
         UnitMeasure pintUom = pintUomOptional.get();
         UnitMeasure cupsUom = cupsUomOptional.get();
@@ -133,7 +133,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
         guacRecipe.setNotes(guacNotes);
 
         guacRecipe.addIngredient(new Ingredient("ripe avocados", new BigDecimal(2), eachUom));
-        guacRecipe.addIngredient(new Ingredient("Kosher salt", new BigDecimal(".5"), teapoonUom));
+        guacRecipe.addIngredient(new Ingredient("Kosher salt", new BigDecimal(".5"), teaspoonUom));
         guacRecipe.addIngredient(new Ingredient("fresh lime juice or lemon juice", new BigDecimal(2), tableSpoonUom));
         guacRecipe.addIngredient(new Ingredient("minced red onion or thinly sliced green onion", new BigDecimal(2), tableSpoonUom));
         guacRecipe.addIngredient(new Ingredient("serrano chiles, stems and seeds removed, minced", new BigDecimal(2), eachUom));
@@ -184,10 +184,10 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 
         tacosRecipe.addIngredient(new Ingredient("Ancho Chili Powder", new BigDecimal(2), tableSpoonUom, tacosRecipe));
-        tacosRecipe.addIngredient(new Ingredient("Dried Oregano", new BigDecimal(1), teapoonUom, tacosRecipe));
-        tacosRecipe.addIngredient(new Ingredient("Dried Cumin", new BigDecimal(1), teapoonUom, tacosRecipe));
-        tacosRecipe.addIngredient(new Ingredient("Sugar", new BigDecimal(1), teapoonUom, tacosRecipe));
-        tacosRecipe.addIngredient(new Ingredient("Salt", new BigDecimal(".5"), teapoonUom, tacosRecipe));
+        tacosRecipe.addIngredient(new Ingredient("Dried Oregano", new BigDecimal(1), teaspoonUom, tacosRecipe));
+        tacosRecipe.addIngredient(new Ingredient("Dried Cumin", new BigDecimal(1), teaspoonUom, tacosRecipe));
+        tacosRecipe.addIngredient(new Ingredient("Sugar", new BigDecimal(1), teaspoonUom, tacosRecipe));
+        tacosRecipe.addIngredient(new Ingredient("Salt", new BigDecimal(".5"), teaspoonUom, tacosRecipe));
         tacosRecipe.addIngredient(new Ingredient("Clove of Garlic, Choppedr", new BigDecimal(1), eachUom, tacosRecipe));
         tacosRecipe.addIngredient(new Ingredient("finely grated orange zestr", new BigDecimal(1), tableSpoonUom, tacosRecipe));
         tacosRecipe.addIngredient(new Ingredient("fresh-squeezed orange juice", new BigDecimal(3), tableSpoonUom, tacosRecipe));

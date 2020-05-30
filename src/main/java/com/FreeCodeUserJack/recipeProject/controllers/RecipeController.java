@@ -27,7 +27,7 @@ public class RecipeController {
     @GetMapping("/recipe/{id}/show")
     public String showById(@PathVariable String id, Model model) {
         // valueOf() returns Long obj while parseLong() returns long primitive
-        model.addAttribute("recipe", recipeService.findById(Long.valueOf(id)));
+        model.addAttribute("recipe", recipeService.findById(Long.valueOf(id))); // maybe findCommandById?
 
         return "recipe/show";
     }
@@ -54,7 +54,8 @@ public class RecipeController {
                 log.debug(error.toString());
             });
 
-            // BindingResult allows us to access #fields property in thymeleaf
+            // BindingResult allows us to access #fields property in thymeleaf (?)
+                // #fields, #list, etc. are thymeleaf utility methods
 
             return RECIPE_RECIPEFORM_URL;
         }

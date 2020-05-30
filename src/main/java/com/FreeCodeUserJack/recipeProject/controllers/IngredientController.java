@@ -50,6 +50,8 @@ public class IngredientController {
         // make sure recipe is found todo implement not found handling
         RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
 
+        // throw NotFoundException is recipeCommand is null?
+
         // create new ing and set recipe id for hidden form field
         IngredientCommand ingredientCommand = new IngredientCommand();
         ingredientCommand.setRecipeId(Long.valueOf(recipeId));

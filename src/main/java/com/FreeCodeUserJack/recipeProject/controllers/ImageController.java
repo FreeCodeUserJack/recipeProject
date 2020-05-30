@@ -35,7 +35,7 @@ public class ImageController {
         return "recipe/imageUploadForm";
     }
 
-    @PostMapping("recipe/{recipeId}/image") // requestparam is input tag name
+    @PostMapping("recipe/{recipeId}/image") // requestparam is input tag name (?)
     public String handleImagePost(@PathVariable String recipeId, @RequestParam("imagefile") MultipartFile file) {
         imageService.saveImageFile(Long.valueOf(recipeId), file);
 
@@ -46,8 +46,8 @@ public class ImageController {
     public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws IOException {
         RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(id));
 
-        if(recipeCommand.getImage() != null) { // need to set up start image or default image
-            byte[] byteArray = new byte[recipeCommand.getImage().length];
+        if(recipeCommand.getImage() != null) { // need to set up start image or default image in Dataloader bootstrap
+            byte[] byteArray = new byte[recipeCommand.getImage().length]; // can't use Byte[] here (?)
             int i = 0;
 
             // why do we need to copy over byte by byte

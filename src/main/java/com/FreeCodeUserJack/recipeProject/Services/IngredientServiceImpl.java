@@ -55,7 +55,7 @@ public class IngredientServiceImpl implements IngredientService {
     @Transactional
     public IngredientCommand saveIngredientCommand(IngredientCommand command) {
         // debug
-        System.out.println("Inside IngredientServiceImpl!: " + command.getUnitOfMeasure());
+//        System.out.println("Inside IngredientServiceImpl!: " + command.getUnitOfMeasure());
 
         Optional<Recipe> recipeOptional = recipeRepository.findById(command.getRecipeId());
 
